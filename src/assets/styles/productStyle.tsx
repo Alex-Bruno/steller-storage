@@ -14,9 +14,10 @@ export const Header = styled.View`
 
 export const Logo = styled.Image`
   flex: 1;
-  min-width: 250px;
-  min-height: 250px;
+  width: 250px;
+  height: 250px;
   resize-mode: contain;
+
 `
 export const ContainerForm = styled.View`
   flex: 3;
@@ -105,7 +106,7 @@ export const ButtonEdit = styled.TouchableOpacity`
 export const ButtonAdd = styled.TouchableOpacity`
   width: 50px;
   height: 50px;
-  background: #00F;
+  background: #ff4000;
   border: 2px solid #DDD;
   border-radius: 25px;
   align-items: center;
