@@ -2,11 +2,32 @@
   "name": "app",
   "displayName": "app",
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "steller-storage",
+    "scheme": "storage-app",
+    "slug": "steller-storage",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/icon.png",
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "userInterfaceStyle": "automatic",
+    "android": {
+      "userInterfaceStyle": "dark"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "userInterfaceStyle": "light"
+    },
+    "description": "Expo-react-native application for registering and selling products using type-orm and sqlite",
+    "githubUrl": "https://github.com/Alex-Bruno/steller-storage.git"
   }
 }

@@ -1,19 +1,23 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'reflect-metadata'
+import React from 'react'
+import { AppearanceProvider } from 'react-native-appearance'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
+import useCachedResources from './src/hooks/useCachedResources'
+import useColorScheme from './src/hooks/useColorScheme'
+import ContentApp from './src'
+
+export default function App () {
+  const isLoadingComplete = useCachedResources()
+  const colorScheme = useColorScheme()
+
+  console.log('APP.TSX')
+  if (!isLoadingComplete) {
+    return null
+  } else {
+    return (
+      <AppearanceProvider>
+        <ContentApp colorScheme={colorScheme} />
+      </AppearanceProvider>
+    )
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
