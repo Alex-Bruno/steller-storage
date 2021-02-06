@@ -1,2 +1,2 @@
 # steller-storage
-Aplicativo expo-react-native, para cadastro e vendas de produtos utilizando type-orm e sqlite
+Expo-react-native application for registering and selling products using type-orm and sqlite
