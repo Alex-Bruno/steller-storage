@@ -92,7 +92,7 @@ class ProductScreen extends React.Component {
   renderButton = () => {
     return (
       <ButtonAdd
-        onPress={() => this.props.navigation.navigate('new', {title: 'Novo Produto'})}
+        onPress={() => this.props.navigation.navigate('new', {title: 'Novo Produto', id: null})}
       >
         {this.renderIcon('plus', 20, 'white')}
       </ButtonAdd>

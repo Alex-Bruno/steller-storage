@@ -68,7 +68,9 @@ class NewProductScreen extends React.Component {
     const { route } = this.props
     if (route && route.params) {
       const { id } = route.params
+      if(id !== null) {
       await this.loadAndSetProduct(id)
+      }
     }
   }
 
