@@ -4,10 +4,11 @@ import { TextField } from 'react-native-ui-lib'
 import { connect } from 'react-redux'
 import { Alert, Platform } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
-import LottieView from 'lottie-react-native'
-import { FontAwesome5 } from '@expo/vector-icons'
 
-import { Container, Header, Logo, ContainerForm, ButtonSuccess, ButtonUpload, TextButton, ButtonBack } from '../../assets/styles/productStyle'
+import { Container, Header, Logo, ContainerForm } from '../../assets/styles/productStyle'
+import { BackButton, SaveButton, UploadButton } from '../../components/Buttons'
+import { LoadingCircleBlue } from '../../components/Animations'
+
 import { priceFormat, convertStringToFloat, getLogo } from '../../services/functions'
 import ProductRepository from '../../data/repositories/ProductRepository'
 
@@ -68,8 +69,8 @@ class NewProductScreen extends React.Component {
     const { route } = this.props
     if (route && route.params) {
       const { id } = route.params
-      if(id !== null) {
-      await this.loadAndSetProduct(id)
+      if (id !== null) {
+        await this.loadAndSetProduct(id)
       }
     }
   }
@@ -91,7 +92,7 @@ class NewProductScreen extends React.Component {
       this.setType(product.type)
       this.setPrice(product.price.toString())
     }
-    
+
     this.setLoading(false)
     return product
   }
@@ -137,13 +138,18 @@ class NewProductScreen extends React.Component {
         if (await repository.getByName(name) && !id) {
           Alert.alert('Já existe um produto com esse nome!')
         } else {
-          await repository.create({
-            id: id ? id : 0,
+          let item = {
             name,
             description,
             price: float,
             image,
             type
+          }
+          if (id) {
+            item = { ...item, id }
+          }
+          await repository.create({
+            ...item
           })
 
           Alert.alert('Produto salvo com sucesso!')
@@ -161,6 +167,7 @@ class NewProductScreen extends React.Component {
 
   clearForm = () => {
     this.setState({
+      id: null,
       name: '',
       description: '',
       price: '',
@@ -181,9 +188,7 @@ class NewProductScreen extends React.Component {
           <Logo source={image ? { uri: image } : getLogo()} />
           {
             !keyboard && (
-              <ButtonUpload onPress={this.pickImage}>
-                <TextButton>Adicionar Foto</TextButton>
-              </ButtonUpload>
+              <UploadButton onPress={this.pickImage} />
             )
           }
 
@@ -225,17 +230,13 @@ class NewProductScreen extends React.Component {
             value={price}
           />
 
-          <ButtonSuccess onPress={handleSubmit}>
-            <TextButton>Salvar</TextButton>
-          </ButtonSuccess>
+          <SaveButton onPress={handleSubmit} />
 
         </ContainerForm>
 
         {
           !keyboard && (
-            <ButtonBack onPress={() => this.props.navigation.navigate('index')}>
-              <FontAwesome5 name='chevron-left' size={20} color='white' />
-            </ButtonBack>
+            <BackButton onPress={() => this.props.navigation.navigate('index')} />
           )
         }
       </Container>
@@ -248,19 +249,7 @@ class NewProductScreen extends React.Component {
     return (
       loading ? (
         <Container>
-          <LottieView
-            source={require('../../assets/animations/loading-circle.json')}
-            colorFilters={
-              [{
-                keypath: "button",
-                color: "#F00000"
-              }, {
-                keypath: "Sending Loader",
-                color: "#F00000"
-              }]}
-            autoPlay
-            loop
-          />
+          <LoadingCircleBlue />
         </Container>
       ) : (
           this.renderContent()

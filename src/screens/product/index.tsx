@@ -1,31 +1,34 @@
 import React from 'react'
 import { Connection } from 'typeorm'
 import { connect } from 'react-redux'
-import LottieView from 'lottie-react-native'
 import { FontAwesome5 } from '@expo/vector-icons'
 
-import { Container, ScrollView, List, ContainerEmpty, TextMessage, ButtonAdd } from '../../assets/styles/productStyle'
+import { Container, ScrollView, List, ContainerEmpty, TextMessage, ContainerButtons } from '../../assets/styles/productStyle'
+import { AddButton, RefressButton, NextPageButton, BeforePageButton } from '../../components/Buttons'
+import { LoadingCircleBlue, EmptyList } from '../../components/Animations'
 import ProductRepository from '../../data/repositories/ProductRepository'
 import { renderProduct } from '../../components/ProductItem'
+import { ProductModel } from '../../data/entities/ProductModel'
 
 class ProductScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const edit = navigation.getParam('id');
     console.log(edit)
-    if(edit){
+    if (edit) {
       return {
         title: 'Edit Page',
       }
-    }else{
+    } else {
       return {
         title: 'Normal Page',
       }
     }
- }
+  }
 
   state = {
     products: [],
+    page: 0,
     loading: false,
   }
 
@@ -37,6 +40,10 @@ class ProductScreen extends React.Component {
     this.setState({ loading })
   }
 
+  setPage = (page: number) => {
+    this.setState({ page })
+  }
+
   async componentDidMount() {
     this.loadItems()
   }
@@ -44,16 +51,34 @@ class ProductScreen extends React.Component {
   loadItems = async () => {
     this.setLoading(true)
     const { connection } = this.props
+    const { page } = this.state
+
     if (connection) {
       const repository = new ProductRepository(connection)
 
-      const products = await repository.getAllPagination(10, 0)
+      const products = await repository.getAllPagination(6, (page * 6))
 
       this.setProducts(products)
     }
     this.setLoading(false)
   }
 
+  loadInitialProducts = async () => {
+    await this.setPage(0)
+    await this.loadItems()
+  }
+
+  loadMoreProducts = async () => {
+    const { page } = this.state
+    await this.setPage(page + 1)
+    await this.loadItems()
+  }
+
+  loadMinusProducts = async () => {
+    const { page } = this.state
+    await this.setPage(page - 1)
+    await this.loadItems()
+  }
 
   renderItem = ({ item }) => {
     return (
@@ -73,9 +98,12 @@ class ProductScreen extends React.Component {
               <List
                 data={products}
                 renderItem={this.renderItem}
-                keyExtractor={item => item.id}
-                onRefresh={() => this.loadItems()}
+                keyExtractor={(item: ProductModel) => item.id.toString()}
+                onRefresh={() => this.loadInitialProducts()}
                 refreshing={loading}
+                onEndReachedThreshold={0}
+                onEndReached={() => this.LoadMoreProducts()}
+                horizontal={false}
               />
             </ScrollView>
           ) : (
@@ -83,19 +111,25 @@ class ProductScreen extends React.Component {
             )
         }
         {
-          this.renderButton()
+          this.renderButtons()
         }
       </Container>
     )
   }
 
-  renderButton = () => {
+  renderButtons = () => {
+    const {page, products} = this.state
     return (
-      <ButtonAdd
-        onPress={() => this.props.navigation.navigate('new', {title: 'Novo Produto', id: null})}
-      >
-        {this.renderIcon('plus', 20, 'white')}
-      </ButtonAdd>
+      <ContainerButtons>
+        <BeforePageButton onPress={() => page > 0 && this.loadMinusProducts()} page={page} />
+        <RefressButton
+          onPress={() => this.loadInitialProducts()}
+        />
+        <NextPageButton onPress={() => (products && products.length) && this.loadMoreProducts()} page={page + 2} />
+        <AddButton
+          onPress={() => this.props.navigation.navigate('new', { title: 'Novo Produto', id: null })}
+        />
+      </ContainerButtons>
     )
   }
 
@@ -106,34 +140,18 @@ class ProductScreen extends React.Component {
   renderEmpty = () => {
     return (
       <ContainerEmpty>
-        {
-          this.renderAnimation()
-        }
+        <EmptyList />
         <TextMessage>Nenhum produto foi encontrado!</TextMessage>
       </ContainerEmpty>
     )
   }
-
-  renderAnimation = () => (
-    <LottieView
-      source={require('../../assets/animations/empty.json')}
-      autoPlay
-      loop
-    />
-  )
 
   render() {
     const { loading } = this.state
 
     return (
       loading ? (
-        <Container>
-          <LottieView
-            source={require('../../assets/animations/loading-circle.json')}
-            autoPlay
-            loop
-          />
-        </Container>
+        <LoadingCircleBlue />
       ) : (
           this.renderContent()
         )

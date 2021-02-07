@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { connect } from 'react-redux'
-import LottieView from 'lottie-react-native'
 
 import NotFoundScreen from '../screens/NotFoundScreen'
 import { RootStackParamList } from '../types'
@@ -10,6 +9,7 @@ import TabNavigator from './TabNavigator'
 import LinkingConfiguration from './LinkingConfiguration'
 import { setConnection } from '../actions/ConnectionAction'
 import { getConnection } from '../data/connection'
+import { LoadingCircleBlue } from '../components/Animations'
 
 class Navigation extends React.Component {
 
@@ -35,11 +35,7 @@ class Navigation extends React.Component {
     const { colorScheme } = this.props
     return (
       this.state.loading ? (
-        <LottieView
-          source={require('../assets/animations/loading-circle.json')}
-          autoPlay
-          loop
-        />
+        <LoadingCircleBlue />
       ) : (
           <NavigationContainer
             linking={LinkingConfiguration}

@@ -49,15 +49,6 @@ export const TextInput = styled.TextInput`
   border-color: #DDD;
   padding: 4px;
 `
-export const ButtonSuccess = styled.TouchableOpacity`
-  width: 250px;
-  height: 40px;
-  background: #0c9107;
-  border: 2px solid #DDD;
-  border-radius: 5px;
-  align-items: center;
-  justify-content: center;
-`
 
 export const TextButton = styled.Text`
   font-size: 16px;
@@ -77,43 +68,6 @@ export const TextMessage = styled.Text`
   font-size: 18px;
   color: #FFF;
   margin-top: 320px;
-`
-export const ButtonBack = styled.TouchableOpacity`
-  width: 50px;
-  height: 50px;
-  background: #d11515;
-  border: 2px solid #DDD;
-  border-radius: 25px;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-`
-export const ButtonEdit = styled.TouchableOpacity`
-  width: 50px;
-  height: 50px;
-  background: #1dc249;
-  border: 2px solid #DDD;
-  border-radius: 25px;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-`
-
-export const ButtonAdd = styled.TouchableOpacity`
-  width: 50px;
-  height: 50px;
-  background: #ff4000;
-  border: 2px solid #DDD;
-  border-radius: 25px;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  bottom: 25px;
-  right: 20px;
 `
 
 export const Card = styled.View`
@@ -142,4 +96,11 @@ export const Image = styled.Image`
   padding: 5px;
   margin-left: 8px;
 `
-export const ScrollView = styled.ScrollView``
+export const ScrollView = styled.ScrollView`
+  flex: 1;
+  margin-bottom: 120px ;
+`
+
+export const ContainerButtons = styled.View`
+  width: 100%;
+`
