@@ -33,6 +33,8 @@ export const Image = styled.Image`
   flex: 1;
   resize-mode: contain;
   width: 90%;
+  border-radius: 30px;
+  margin-bottom: 15px;
 `
 export const Title = styled.Text`
   flex: 1;
@@ -60,9 +62,9 @@ export const TextMedium = styled.Text`
 `
 
 export const TextLarge = styled.Text`
-  flex: 1;
   font-size: 30px;
   font-weight: bold;
   align-items: center;
   justify-content: center;
+  margin: 20px;
 `

@@ -38,7 +38,7 @@ const RenderProduct = ({ item, navigation }) => {
       <ContainerItem>
         <EditButton onPress={() => navigation.navigate('new', { id: item.id, title: `Editar Produto ${item.name}` })} />
       </ContainerItem>
-      <ModalProduct item={item} isVisible={modalVisible} setModalVisible={setModalVisible} />
+      <ModalProduct item={item} isVisible={modalVisible} setModalVisible={setModalVisible} navigation={navigation} />
     </Card>
   )
 }
