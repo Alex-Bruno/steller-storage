@@ -7,9 +7,10 @@ import { Container, ScrollView, List, ContainerEmpty, TextMessage, ContainerButt
 import { AddButton, RefressButton, NextPageButton, BeforePageButton } from '../../components/Buttons'
 import { LoadingCircleBlue, EmptyList } from '../../components/Animations'
 import ProductRepository from '../../data/repositories/ProductRepository'
-import { renderProduct } from '../../components/ProductItem'
+import RenderProduct from '../../components/ProductItem'
 import { ProductModel } from '../../data/entities/ProductModel'
 
+const maxItemsPage = 6;
 class ProductScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -56,7 +57,7 @@ class ProductScreen extends React.Component {
     if (connection) {
       const repository = new ProductRepository(connection)
 
-      const products = await repository.getAllPagination(6, (page * 6))
+      const products = await repository.getAllPagination(maxItemsPage, (page * maxItemsPage))
 
       this.setProducts(products)
     }
@@ -82,7 +83,7 @@ class ProductScreen extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      renderProduct(item, this.props.navigation)
+      <RenderProduct item={item} navigation={this.props.navigation} />
     )
   }
 
@@ -118,14 +119,14 @@ class ProductScreen extends React.Component {
   }
 
   renderButtons = () => {
-    const {page, products} = this.state
+    const { page, products } = this.state
     return (
       <ContainerButtons>
         <BeforePageButton onPress={() => page > 0 && this.loadMinusProducts()} page={page} />
         <RefressButton
           onPress={() => this.loadInitialProducts()}
         />
-        <NextPageButton onPress={() => (products && products.length) && this.loadMoreProducts()} page={page + 2} />
+        <NextPageButton onPress={() => (products && products.length === maxItemsPage) && this.loadMoreProducts()} page={page + 2} />
         <AddButton
           onPress={() => this.props.navigation.navigate('new', { title: 'Novo Produto', id: null })}
         />

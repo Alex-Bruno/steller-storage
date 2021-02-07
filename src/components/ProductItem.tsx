@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Text } from 'react-native-ui-lib'
 import { Dimensions } from 'react-native'
 
-import { ProductModel } from '../data/entities/ProductModel'
 import { convertFloatToMoney, getLogo } from '../services/functions'
-import { Image, ContainerItem } from '../assets/styles/productStyle'
+import { Image, ContainerItem, ContainerImage } from '../assets/styles/productStyle'
 import { EditButton } from '../components/Buttons'
+import { ModalProduct } from './Modal'
 
-export function renderProduct(item: ProductModel, navigation) {
+const RenderProduct = ({ item, navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false)
+
   const value = convertFloatToMoney(item.price)
 
   return (
@@ -15,13 +17,16 @@ export function renderProduct(item: ProductModel, navigation) {
       elevation={3}
       height={100}
       width={Dimensions.get('window').width - 10}
-      enableShadow={true}
-      row={true}
+      enableShadow
+      row
       style={{ marginBottom: 8 }}
     >
-      <ContainerItem>
+      <ContainerImage onPress={() => {
+        setModalVisible(true)
+      }}
+      >
         <Image source={(item.image && item.type) ? { uri: item.image } : getLogo()} />
-      </ContainerItem>
+      </ContainerImage>
       <ContainerItem>
         <Text center text80 uppercase style={{ marginTop: 15 }}>
           {item.name}
@@ -33,6 +38,9 @@ export function renderProduct(item: ProductModel, navigation) {
       <ContainerItem>
         <EditButton onPress={() => navigation.navigate('new', { id: item.id, title: `Editar Produto ${item.name}` })} />
       </ContainerItem>
+      <ModalProduct item={item} isVisible={modalVisible} setModalVisible={setModalVisible} />
     </Card>
   )
 }
+
+export default RenderProduct

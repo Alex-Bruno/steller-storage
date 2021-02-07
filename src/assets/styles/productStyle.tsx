@@ -87,6 +87,12 @@ export const ContainerItem = styled.View`
   justify-content: flex-start;
 `
 
+export const ContainerImage = styled.TouchableOpacity`
+  flex: 1;
+  align-items: flex-start;
+  justify-content: flex-start;
+`
+
 export const Image = styled.Image`
   flex: 1;
   width: 80px;

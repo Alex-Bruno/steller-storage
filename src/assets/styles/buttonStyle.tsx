@@ -25,6 +25,17 @@ export const ButtonRed = styled.TouchableOpacity`
   bottom: 25px;
   right: 25px;
 `
+
+export const ButtonRedFixed = styled.TouchableOpacity`
+  width: 50px;
+  height: 50px;
+  background: #d11515;
+  border: 2px solid #DDD;
+  border-radius: 25px;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+ `
 export const ButtonOrange = styled.TouchableOpacity`
   width: 50px;
   height: 50px;
