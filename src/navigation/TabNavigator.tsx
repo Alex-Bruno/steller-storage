@@ -6,9 +6,12 @@ import { createStackNavigator, StackScreenProps } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 import DashboardScreen from '../screens/DashboardScreen'
-//
+// Product
 import ProductScreen from '../screens/product'
 import ProductNewScreen from '../screens/product/new'
+// PaymentType
+import PaymentTypeScreen from '../screens/PaymentType'
+import NewPaymentTypeScreen from '../screens/PaymentType/new'
 //
 import SideBarMenu from './SideBarMenu'
 import { RootStackParamList } from '../types'
@@ -36,6 +39,16 @@ function DashboardScreenStack({
       <Stack.Screen
         name='index'
         component={DashboardScreen}
+        options={{
+          title: 'Dashboard',
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTintColor: '#FFF', // Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold' // Set Header text style
+          }
+        }}
       />
     </Stack.Navigator>
   )
@@ -78,6 +91,43 @@ function ProductScreenStack({
   )
 }
 
+function PaymentTypeStack({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
+  return (
+    <Stack.Navigator initialRouteName='index'>
+      <Stack.Screen
+        name='index'
+        component={PaymentTypeScreen}
+        options={{
+          title: 'Forma de pagamento',
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTintColor: '#FFF', // Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold' // Set Header text style
+          }
+        }}
+      />
+      <Stack.Screen
+        name='new'
+        component={NewPaymentTypeScreen}
+        options={({ route }) => ({
+          title: route.params.title,
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTintColor: '#FFF', // Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold' // Set Header text style
+          }
+        })}
+      />
+    </Stack.Navigator>
+  )
+}
+
 export default function DrawerNavigator() {
   return (
     <Drawer.Navigator
@@ -86,7 +136,7 @@ export default function DrawerNavigator() {
         itemStyle: { marginVertical: 5 }
       }}
       drawerContent={(props) => <SideBarMenu {...props} />}
-      initialRouteName='product'
+      initialRouteName='dashboard'
     >
 
       <Drawer.Screen
@@ -99,6 +149,12 @@ export default function DrawerNavigator() {
         name='product'
         component={ProductScreenStack}
         options={{ drawerLabel: 'Produtos' }}
+      />
+
+      <Drawer.Screen
+        name='payment-type'
+        component={PaymentTypeStack}
+        options={{ drawerLabel: 'Forma de pagamento' }}
       />
 
     </Drawer.Navigator>

@@ -21,13 +21,14 @@ export default class ProductRepository {
   }
 
   public async getAll(): Promise<ProductModel[]> {
-    const products = await this.ormRepository.find()
+    const products = await this.ormRepository.find({where: { enabled: true }})
 
     return products
   }
 
   public async getAllPagination(take: number, skip: number): Promise<ProductModel[]> {
     const products = await this.ormRepository.find({
+      where: { enabled: true },
       take,
       skip,
       order: { name: 'ASC' },
@@ -48,7 +49,13 @@ export default class ProductRepository {
     return product
   }
 
-  public async delete(id: number): Promise<void> {
-    await this.ormRepository.delete(id)
+  public async remove(data: object): Promise<ProductModel> {
+    const product = this.ormRepository.create({
+      ...data,
+      enabled: false,
+    })
+    await this.ormRepository.save(product)
+    
+    return product
   }
 }

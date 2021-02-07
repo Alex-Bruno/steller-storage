@@ -2,6 +2,14 @@ import React from 'react'
 import { ButtonGreen, ButtonRed, ButtonRedFixed, ButtonOrange, ButtonBlue, ButtonLargeGreen, ButtonLargeBlue, TextButton } from '../assets/styles/buttonStyle'
 import { FontAwesome5 } from '@expo/vector-icons'
 
+export function EnterButton ({ onPress }) {
+  return (
+    <ButtonGreen onPress={() => onPress()}>
+      <FontAwesome5 name='chevron-right' size={20} color='white' />
+    </ButtonGreen>
+  )
+}
+
 export function EditButton ({ onPress }) {
   return (
     <ButtonGreen onPress={() => onPress()}>

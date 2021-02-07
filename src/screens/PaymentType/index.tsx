@@ -6,21 +6,21 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { Container, ScrollView, List, ContainerEmpty, TextMessage, ContainerButtons } from '../../assets/styles/productStyle'
 import { AddButton, RefressButton, NextPageButton, BeforePageButton } from '../../components/Buttons'
 import { LoadingCircleBlue, EmptyList } from '../../components/Animations'
-import ProductRepository from '../../data/repositories/ProductRepository'
-import RenderProduct from '../../components/ProductItem'
-import { ProductModel } from '../../data/entities/ProductModel'
+import PaymentTypeRepository from '../../data/repositories/PaymentTypeRepository'
+import PaymentType from '../../components/PaymentType'
+import { PaymentTypeModel } from '../../data/entities/PaymentType'
 
 const maxItemsPage = 6;
-class ProductScreen extends React.Component {
+class PaymentTypeScreen extends React.Component {
 
   state = {
-    products: [],
+    items: [],
     page: 0,
     loading: false,
   }
 
-  setProducts = (products: object) => {
-    this.setState({ products })
+  setItems = (items: object) => {
+    this.setState({ items })
   }
 
   setLoading = (loading: boolean) => {
@@ -41,27 +41,27 @@ class ProductScreen extends React.Component {
     const { page } = this.state
 
     if (connection) {
-      const repository = new ProductRepository(connection)
+      const repository = new PaymentTypeRepository(connection)
 
-      const products = await repository.getAllPagination(maxItemsPage, (page * maxItemsPage))
+      const items = await repository.getAllPagination(maxItemsPage, (page * maxItemsPage))
 
-      this.setProducts(products)
+      this.setItems(items)
     }
     this.setLoading(false)
   }
 
-  loadInitialProducts = async () => {
+  loadInitialItems = async () => {
     await this.setPage(0)
     await this.loadItems()
   }
 
-  loadMoreProducts = async () => {
+  loadMoreItems = async () => {
     const { page } = this.state
     await this.setPage(page + 1)
     await this.loadItems()
   }
 
-  loadMinusProducts = async () => {
+  loadMinusItems = async () => {
     const { page } = this.state
     await this.setPage(page - 1)
     await this.loadItems()
@@ -69,27 +69,27 @@ class ProductScreen extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      <RenderProduct item={item} navigation={this.props.navigation} />
+      <PaymentType item={item} navigation={this.props.navigation} />
     )
   }
 
   renderContent = () => {
 
-    const { products, loading } = this.state
+    const { items, loading } = this.state
 
     return (
       <Container>
         {
-          (products && Object.keys(products).length) ? (
+          (items && Object.keys(items).length) ? (
             <ScrollView>
               <List
-                data={products}
+                data={items}
                 renderItem={this.renderItem}
-                keyExtractor={(item: ProductModel) => item.id.toString()}
-                onRefresh={() => this.loadInitialProducts()}
+                keyExtractor={(item: PaymentTypeModel) => item.id.toString()}
+                onRefresh={() => this.loadInitialItems()}
                 refreshing={loading}
                 onEndReachedThreshold={0}
-                onEndReached={() => this.loadMoreProducts()}
+                onEndReached={() => this.loadMoreItems()}
                 horizontal={false}
               />
             </ScrollView>
@@ -105,16 +105,16 @@ class ProductScreen extends React.Component {
   }
 
   renderButtons = () => {
-    const { page, products } = this.state
+    const { page, items } = this.state
     return (
       <ContainerButtons>
-        <BeforePageButton onPress={() => page > 0 && this.loadMinusProducts()} page={page} />
+        <BeforePageButton onPress={() => page > 0 && this.loadMinusItems()} page={page} />
         <RefressButton
-          onPress={() => this.loadInitialProducts()}
+          onPress={() => this.loadInitialItems()}
         />
-        <NextPageButton onPress={() => (products && products.length === maxItemsPage) && this.loadMoreProducts()} page={page + 2} />
+        <NextPageButton onPress={() => (items && items.length === maxItemsPage) && this.loadMoreItems()} page={page + 2} />
         <AddButton
-          onPress={() => this.props.navigation.navigate('new', { title: 'Novo Produto', id: null })}
+          onPress={() => this.props.navigation.navigate('new', { title: 'Nova Forma de Pagamento', id: null })}
         />
       </ContainerButtons>
     )
@@ -128,7 +128,7 @@ class ProductScreen extends React.Component {
     return (
       <ContainerEmpty>
         <EmptyList />
-        <TextMessage>Nenhum produto foi encontrado!</TextMessage>
+        <TextMessage margin='380px'>Nenhuma forma de pagamento foi encontrada!</TextMessage>
       </ContainerEmpty>
     )
   }
@@ -153,4 +153,4 @@ const mapStateToProps = (state: { ConnectionReducer: { connection: Connection } 
 export default connect(
   mapStateToProps,
   null,
-)(ProductScreen)
+)(PaymentTypeScreen)

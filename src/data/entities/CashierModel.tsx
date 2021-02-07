@@ -1,5 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import {PurchaseModel} from './PurchaseModel'
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity('cashiers')
 export class CashierModel {
@@ -30,6 +29,4 @@ export class CashierModel {
   @Column()
   status: boolean
 
-  @OneToMany(() => PurchaseModel, purchase => purchase.paymentType)
-    purchases: PurchaseModel[];
 }

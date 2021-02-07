@@ -65,9 +65,10 @@ export const ContainerEmpty = styled.View`
 `
 
 export const TextMessage = styled.Text`
+  margin-left: 15px;
   font-size: 18px;
   color: #FFF;
-  margin-top: 320px;
+  margin-top: ${props => props.margin || '320px'};
 `
 
 export const Card = styled.View`
@@ -109,4 +110,15 @@ export const ScrollView = styled.ScrollView`
 
 export const ContainerButtons = styled.View`
   width: 100%;
+`
+export const ContainerCenter = styled.View`
+  flex: 3;
+  align-items: flex-start;
+  justify-content: center;
+`
+
+export const ContainerSmallCenter = styled.View`
+  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
 `
