@@ -135,7 +135,7 @@ class NewProductScreen extends React.Component {
 
         const repository = new ProductRepository(connection)
 
-        if (await repository.getByName(name) && !id) {
+        if (await repository.getByName(name) && id === null) {
           Alert.alert('Já existe um produto com esse nome!')
         } else {
           let item = {
@@ -145,9 +145,11 @@ class NewProductScreen extends React.Component {
             image,
             type
           }
-          if (id) {
+          
+          if (id !== null) {
             item = { ...item, id }
           }
+          
           await repository.create({
             ...item
           })
@@ -174,6 +176,7 @@ class NewProductScreen extends React.Component {
       uri: null,
       image: '',
       error: '',
+      keyboard: false,
     })
   }
 
