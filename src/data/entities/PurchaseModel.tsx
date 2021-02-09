@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm"
-import { PaymentTypeModel } from './PaymentType'
+import { PaymentTypeModel } from './PaymentTypeModel'
 import { CashierModel } from './CashierModel'
 import { ProductModel } from './ProductModel'
 

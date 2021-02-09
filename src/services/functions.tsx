@@ -69,3 +69,7 @@ export function getLogo() {
 
   return colorSchema === 'dark' ? LogoImage : LogoWhite
 }
+
+export function dateFormat(date: Date) {
+  return `${date.getUTCDate()}/${(date.getUTCMonth() + 1)}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+}

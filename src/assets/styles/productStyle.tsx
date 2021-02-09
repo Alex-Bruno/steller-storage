@@ -68,7 +68,7 @@ export const TextMessage = styled.Text`
   margin-left: 15px;
   font-size: 18px;
   color: #FFF;
-  margin-top: ${props => props.margin || '320px'};
+  margin-top: ${props => props.margin || '380px'};
 `
 
 export const Card = styled.View`

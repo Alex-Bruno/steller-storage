@@ -2,21 +2,21 @@ import React from 'react'
 import { Connection } from 'typeorm'
 import { TextField } from 'react-native-ui-lib'
 import { connect } from 'react-redux'
-import { Alert } from 'react-native'
+import { Alert, Platform } from 'react-native'
+import * as ImagePicker from 'expo-image-picker'
 
 import { Container, Header, Logo, ContainerForm } from '../../assets/styles/productStyle'
-import { BackButton, SaveButton, UploadButton } from '../../components/Buttons'
+import { BackButton, SaveButton } from '../../components/Buttons'
 import { LoadingCircleBlue } from '../../components/Animations'
 
-import { getLogo } from '../../services/functions'
-import PaymentTypeRepository from '../../data/repositories/PaymentTypeRepository'
+import { priceFormat, convertStringToFloat, getLogo } from '../../services/functions'
+import CashierRepository from '../../data/repositories/CashierRepository'
 
-class NewPaymentTypeScreen extends React.Component {
+class NewCashierScreen extends React.Component {
 
   state = {
     id: null,
-    name: '',
-    error: '',
+    valueOpen: '',
     loading: false,
   }
 
@@ -24,8 +24,8 @@ class NewPaymentTypeScreen extends React.Component {
     this.setState({ id })
   }
 
-  setName = (name: string) => {
-    this.setState({ name })
+  setValueOpen = async (valueOpen: string) => {
+    await this.setState({ valueOpen: priceFormat(valueOpen) })
   }
 
   setLoading = (loading: boolean) => {
@@ -33,6 +33,13 @@ class NewPaymentTypeScreen extends React.Component {
   }
 
   async componentDidMount() {
+    if (Platform.OS !== 'web') {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync()
+      if (status !== 'granted') {
+        Alert.alert('Sorry, we need camera roll permissions to make this work!')
+      }
+    }
+
     const { route } = this.props
     if (route && route.params) {
       const { id } = route.params
@@ -47,13 +54,13 @@ class NewPaymentTypeScreen extends React.Component {
     this.setLoading(true)
 
 
-    const repository = new PaymentTypeRepository(connection)
+    const repository = new CashierRepository(connection)
 
     const item = await repository.getById(id)
 
     if (item) {
       this.setId(item.id)
-      this.setName(item.name)
+      this.setValueOpen(item.valueOpen.toFixed(2).toString())
     }
 
     this.setLoading(false)
@@ -64,36 +71,38 @@ class NewPaymentTypeScreen extends React.Component {
 
     this.setLoading(true)
 
-    const { id, name } = this.state
+    const { id, valueOpen } = this.state
 
-    if (name) {
+    const float = convertStringToFloat(valueOpen)
+
+    if (valueOpen !== null) {
 
       try {
         const { connection } = this.props
+        const date = new Date()
 
-        const repository = new PaymentTypeRepository(connection)
+        const repository = new CashierRepository(connection)
 
-        const validate = await repository.getByName(name)
-        if (validate && validate.id !== id) {
-          Alert.alert('Já existe uma forma de pagamento com esse nome!')
+        if (await repository.getOpen() && id === null) {
+          Alert.alert('Já existe um caixa aberto!')
         } else {
-          let item = {
-            name
-          }
+          let item = { valueOpen: float }
 
           if (id !== null) {
             item = { ...item, id }
+          } else {
+            item = { ...item, status: false, dateOpen: date, valueTotal: float }
           }
 
           await repository.create({
             ...item
           })
 
-          Alert.alert('Forma de pagamento salva com sucesso!')
+          Alert.alert('Caixa salvo com sucesso!')
           this.clearForm()
         }
       } catch (e) {
-        Alert.alert('Ocorreu um erro ao tentar cadastrar a forma de pagamento!')
+        Alert.alert('Ocorreu um erro ao tentar cadastrar o caixa!')
       }
     } else {
       Alert.alert('Dados inválidos!')
@@ -105,14 +114,13 @@ class NewPaymentTypeScreen extends React.Component {
   clearForm = () => {
     this.setState({
       id: null,
-      name: '',
-      error: ''
+      valueOpen: ''
     })
   }
 
   renderContent = () => {
-    const { name } = this.state
-    const { setName, handleSubmit } = this
+    const { valueOpen } = this.state
+    const { setValueOpen, handleSubmit } = this
 
     return (
       <Container>
@@ -125,11 +133,11 @@ class NewPaymentTypeScreen extends React.Component {
 
           <TextField
             style={{ width: 250 }}
-            title='Nome'
-            placeholder='Informe um nome'
+            title='Valor de abertura do caixa'
+            placeholder='Informe o valor de abertura'
             autoCompleteType='off'
-            onChangeText={(text: string) => setName(text)}
-            value={name}
+            onChangeText={(text: string) => setValueOpen(text)}
+            value={valueOpen}
           />
 
           <SaveButton onPress={handleSubmit} />
@@ -164,4 +172,4 @@ const mapStateToProps = (state: { ConnectionReducer: { connection: Connection } 
 export default connect(
   mapStateToProps,
   null,
-)(NewPaymentTypeScreen)
+)(NewCashierScreen)

@@ -1,7 +1,7 @@
 import { createConnection } from 'typeorm'
 
 import { ProductModel } from './entities/ProductModel'
-import { PaymentTypeModel } from './entities/PaymentType'
+import { PaymentTypeModel } from './entities/PaymentTypeModel'
 import { CashierModel } from './entities/CashierModel'
 import { PurchaseModel } from './entities/PurchaseModel'
 

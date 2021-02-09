@@ -6,12 +6,12 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { Container, ScrollView, List, ContainerEmpty, TextMessage, ContainerButtons } from '../../assets/styles/productStyle'
 import { AddButton, RefressButton, NextPageButton, BeforePageButton } from '../../components/Buttons'
 import { LoadingCircleBlue, EmptyList } from '../../components/Animations'
-import PaymentTypeRepository from '../../data/repositories/PaymentTypeRepository'
-import PaymentType from '../../components/PaymentType'
-import { PaymentTypeModel } from '../../data/entities/PaymentTypeModel'
+import CashierRepository from '../../data/repositories/CashierRepository'
+import Cashier from '../../components/Cashier'
+import { CashierModel } from '../../data/entities/CashierModel'
 
 const maxItemsPage = 6;
-class PaymentTypeScreen extends React.Component {
+class CashierScreen extends React.Component {
 
   state = {
     items: [],
@@ -41,7 +41,7 @@ class PaymentTypeScreen extends React.Component {
     const { page } = this.state
 
     if (connection) {
-      const repository = new PaymentTypeRepository(connection)
+      const repository = new CashierRepository(connection)
 
       const items = await repository.getAllPagination(maxItemsPage, (page * maxItemsPage))
 
@@ -69,7 +69,7 @@ class PaymentTypeScreen extends React.Component {
 
   renderItem = ({ item }) => {
     return (
-      <PaymentType item={item} navigation={this.props.navigation} />
+      <Cashier item={item} navigation={this.props.navigation} />
     )
   }
 
@@ -85,7 +85,7 @@ class PaymentTypeScreen extends React.Component {
               <List
                 data={items}
                 renderItem={this.renderItem}
-                keyExtractor={(item: PaymentTypeModel) => item.id.toString()}
+                keyExtractor={(item: CashierModel) => item.id.toString()}
                 onRefresh={() => this.loadInitialItems()}
                 refreshing={loading}
                 onEndReachedThreshold={0}
@@ -114,7 +114,7 @@ class PaymentTypeScreen extends React.Component {
         />
         <NextPageButton onPress={() => (items && items.length === maxItemsPage) && this.loadMoreItems()} page={page + 2} />
         <AddButton
-          onPress={() => this.props.navigation.navigate('new', { title: 'Nova Forma de Pagamento', id: null })}
+          onPress={() => this.props.navigation.navigate('new', { title: 'Novo Caixa', id: null })}
         />
       </ContainerButtons>
     )
@@ -128,7 +128,7 @@ class PaymentTypeScreen extends React.Component {
     return (
       <ContainerEmpty>
         <EmptyList />
-        <TextMessage margin='380px'>Nenhuma forma de pagamento foi encontrada!</TextMessage>
+        <TextMessage margin='380px'>Nenhuma caixa foi encontrado!</TextMessage>
       </ContainerEmpty>
     )
   }
@@ -153,4 +153,4 @@ const mapStateToProps = (state: { ConnectionReducer: { connection: Connection } 
 export default connect(
   mapStateToProps,
   null,
-)(PaymentTypeScreen)
+)(CashierScreen)

@@ -1,6 +1,6 @@
 import { Connection, Repository } from 'typeorm'
 
-import { PaymentTypeModel } from '../entities/PaymentType'
+import { PaymentTypeModel } from '../entities/PaymentTypeModel'
 
 export default class PaymentTypeRepository {
 

@@ -90,7 +90,7 @@ class NewProductScreen extends React.Component {
       this.setDescription(product.description)
       this.setImage(product.image)
       this.setType(product.type)
-      this.setPrice(product.price.toString())
+      this.setPrice(product.price.toFixed(2).toString())
     }
 
     this.setLoading(false)
@@ -135,7 +135,8 @@ class NewProductScreen extends React.Component {
 
         const repository = new ProductRepository(connection)
 
-        if (await repository.getByName(name) && id === null) {
+        const validate = await repository.getByName(name)
+        if (validate && id !== validate.id) {
           Alert.alert('Já existe um produto com esse nome!')
         } else {
           let item = {
@@ -145,11 +146,11 @@ class NewProductScreen extends React.Component {
             image,
             type
           }
-          
+
           if (id !== null) {
             item = { ...item, id }
           }
-          
+
           await repository.create({
             ...item
           })

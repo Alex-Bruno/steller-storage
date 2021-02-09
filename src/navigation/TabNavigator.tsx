@@ -12,6 +12,9 @@ import ProductNewScreen from '../screens/product/new'
 // PaymentType
 import PaymentTypeScreen from '../screens/PaymentType'
 import NewPaymentTypeScreen from '../screens/PaymentType/new'
+// Cashier
+import CashierScreen from '../screens/Cashier'
+import NewCashierScreen from '../screens/Cashier/new'
 //
 import SideBarMenu from './SideBarMenu'
 import { RootStackParamList } from '../types'
@@ -128,6 +131,43 @@ function PaymentTypeStack({
   )
 }
 
+function CashierStack({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
+  return (
+    <Stack.Navigator initialRouteName='index'>
+      <Stack.Screen
+        name='index'
+        component={CashierScreen}
+        options={{
+          title: 'Caixa',
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTintColor: '#FFF', // Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold' // Set Header text style
+          }
+        }}
+      />
+       <Stack.Screen
+        name='new'
+        component={NewCashierScreen}
+        options={({ route }) => ({
+          title: route.params.title,
+          headerLeft: () => (
+            <NavigationDrawerStructure navigationProps={navigation} />
+          ),
+          headerTintColor: '#FFF', // Set Header text color
+          headerTitleStyle: {
+            fontWeight: 'bold' // Set Header text style
+          }
+        })}
+      />
+    </Stack.Navigator>
+  )
+}
+
 export default function DrawerNavigator() {
   return (
     <Drawer.Navigator
@@ -157,6 +197,11 @@ export default function DrawerNavigator() {
         options={{ drawerLabel: 'Forma de pagamento' }}
       />
 
+      <Drawer.Screen
+        name='cashier'
+        component={CashierStack}
+        options={{ drawerLabel: 'Caixas' }}
+      />
     </Drawer.Navigator>
   )
 }
