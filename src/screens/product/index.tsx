@@ -3,7 +3,7 @@ import { Connection } from 'typeorm'
 import { connect } from 'react-redux'
 import { FontAwesome5 } from '@expo/vector-icons'
 
-import { Container, ScrollView, List, ContainerEmpty, TextMessage, ContainerButtons } from '../../assets/styles/productStyle'
+import { Container, ScrollView, List, ContainerEmpty, TextMessage, ContainerButtons } from '../../assets/styles/appStyle'
 import { AddButton, RefressButton, NextPageButton, BeforePageButton } from '../../components/Buttons'
 import { LoadingCircleBlue, EmptyList } from '../../components/Animations'
 import ProductRepository from '../../data/repositories/ProductRepository'

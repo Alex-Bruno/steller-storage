@@ -22,6 +22,16 @@ import { RootStackParamList } from '../types'
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 
+const headerOptions = {
+  headerTintColor: '#000', // Set Header text color
+  headerTitleStyle: {
+    fontWeight: 'bold' // Set Header text style
+  },
+  headerStyle: {
+    backgroundColor: '#FFF',
+  }
+}
+
 function NavigationDrawerStructure({ navigationProps }: StackScreenProps<RootStackParamList, 'NotFound'>) {
   const toggleDrawer = () => {
     navigationProps.toggleDrawer()
@@ -47,10 +57,7 @@ function DashboardScreenStack({
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTintColor: '#FFF', // Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold' // Set Header text style
-          }
+          ...headerOptions
         }}
       />
     </Stack.Navigator>
@@ -70,10 +77,7 @@ function ProductScreenStack({
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTintColor: '#FFF', // Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold' // Set Header text style
-          }
+          ...headerOptions
         }}
       />
       <Stack.Screen
@@ -84,10 +88,7 @@ function ProductScreenStack({
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTintColor: '#FFF', // Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold' // Set Header text style
-          }
+          ...headerOptions
         })}
       />
     </Stack.Navigator>
@@ -107,10 +108,7 @@ function PaymentTypeStack({
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTintColor: '#FFF', // Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold' // Set Header text style
-          }
+          ...headerOptions
         }}
       />
       <Stack.Screen
@@ -121,10 +119,7 @@ function PaymentTypeStack({
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTintColor: '#FFF', // Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold' // Set Header text style
-          }
+          ...headerOptions
         })}
       />
     </Stack.Navigator>
@@ -144,13 +139,10 @@ function CashierStack({
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTintColor: '#FFF', // Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold' // Set Header text style
-          }
+          ...headerOptions
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name='new'
         component={NewCashierScreen}
         options={({ route }) => ({
@@ -158,10 +150,7 @@ function CashierStack({
           headerLeft: () => (
             <NavigationDrawerStructure navigationProps={navigation} />
           ),
-          headerTintColor: '#FFF', // Set Header text color
-          headerTitleStyle: {
-            fontWeight: 'bold' // Set Header text style
-          }
+          ...headerOptions
         })}
       />
     </Stack.Navigator>
@@ -173,7 +162,8 @@ export default function DrawerNavigator() {
     <Drawer.Navigator
       drawerContentOptions={{
         activeTintColor: '#e91e63',
-        itemStyle: { marginVertical: 5 }
+        itemStyle: { marginVertical: 5 },
+        inactiveTintColor: '#000'
       }}
       drawerContent={(props) => <SideBarMenu {...props} />}
       initialRouteName='dashboard'
@@ -183,12 +173,6 @@ export default function DrawerNavigator() {
         name='dashboard'
         component={DashboardScreenStack}
         options={{ drawerLabel: 'Dashboard' }}
-      />
-
-      <Drawer.Screen
-        name='product'
-        component={ProductScreenStack}
-        options={{ drawerLabel: 'Produtos' }}
       />
 
       <Drawer.Screen
@@ -202,6 +186,14 @@ export default function DrawerNavigator() {
         component={CashierStack}
         options={{ drawerLabel: 'Caixas' }}
       />
+
+      <Drawer.Screen
+        name='product'
+        component={ProductScreenStack}
+        options={{ drawerLabel: 'Produtos' }}
+      />
+
+
     </Drawer.Navigator>
   )
 }

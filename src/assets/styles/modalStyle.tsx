@@ -4,7 +4,7 @@ export const ModalView = styled.View`
   flex: 1;
   width: 90%;
   height: 80%;
-  background: #000;
+  background: #FFF;
   border: 2px solid #DDD;
   border-radius: 40px;
   margin-horizontal: 5%;
@@ -17,8 +17,8 @@ export const ModalHeader = styled.View`
   margin: 5px;
   margin-bottom: 10px;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 `
 
 export const ModalContent = styled.View`
@@ -44,6 +44,8 @@ export const Title = styled.Text`
   margin-horizontal: 10px;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  text-align: center;
 `
 export const Text = styled.Text`
   flex: 1;

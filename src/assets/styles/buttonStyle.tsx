@@ -4,7 +4,7 @@ export const ButtonGreen = styled.TouchableOpacity`
   width: 50px;
   height: 50px;
   background: #1dc249;
-  border: 2px solid #DDD;
+  border: 1px solid #DDD;
   border-radius: 25px;
   align-items: center;
   justify-content: center;
@@ -66,6 +66,16 @@ export const ButtonLargeGreen = styled.TouchableOpacity`
   width: 250px;
   height: 40px;
   background: #0c9107;
+  border: 2px solid #DDD;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+`
+
+export const ButtonLargeRed = styled.TouchableOpacity`
+  width: 250px;
+  height: 40px;
+  background: #d11515;
   border: 2px solid #DDD;
   border-radius: 10px;
   align-items: center;

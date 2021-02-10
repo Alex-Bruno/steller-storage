@@ -5,20 +5,21 @@ import { FontAwesome5 } from '@expo/vector-icons'
 
 import { ContainerCenter, ContainerSmallCenter } from '../assets/styles/productStyle'
 import { EnterButton } from '../components/Buttons'
+import { getColor } from '../services/functions'
 
-const OptionItem = ({ title, icon, navigation, onPress }) => {
+const OptionItem = ({ title, color, icon, colorIcon, onPress }) => {
   return (
     <Card
       elevation={3}
       height={100}
       width={Dimensions.get('window').width - 10}
-      enableShadow
       row
-      style={{ flex: 1, margin: 10, padding: 10 }}
+      backgroundColor={getColor(color)}
+      style={{ flex: 1, margin: 10, padding: 10, backgroundColor: getColor(color) }}
     >
       <ContainerCenter>
-        <Text text80 uppercase style={{ marginTop: 15 }}>
-          <FontAwesome5 name={icon} size={22} color='white' /> {title}
+        <Text text70 uppercase style={{ marginTop: 15 }}>
+          <FontAwesome5 name={icon} size={22} color={colorIcon || 'black'} /> {title}
         </Text>
       </ContainerCenter>
       <ContainerSmallCenter>

@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { Alert, Platform } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 
-import { Container, Header, Logo, ContainerForm } from '../../assets/styles/productStyle'
+import { Container } from '../../assets/styles/appStyle'
+import { Header, Logo, ContainerForm } from '../../assets/styles/productStyle'
 import { BackButton, SaveButton, UploadButton } from '../../components/Buttons'
 import { LoadingCircleBlue } from '../../components/Animations'
 

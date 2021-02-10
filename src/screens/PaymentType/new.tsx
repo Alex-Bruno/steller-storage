@@ -4,8 +4,9 @@ import { TextField } from 'react-native-ui-lib'
 import { connect } from 'react-redux'
 import { Alert } from 'react-native'
 
-import { Container, Header, Logo, ContainerForm } from '../../assets/styles/productStyle'
-import { BackButton, SaveButton, UploadButton } from '../../components/Buttons'
+import { Container } from '../../assets/styles/appStyle'
+import { Header, Logo, ContainerForm } from '../../assets/styles/productStyle'
+import { BackButton, SaveButton } from '../../components/Buttons'
 import { LoadingCircleBlue } from '../../components/Animations'
 
 import { getLogo } from '../../services/functions'

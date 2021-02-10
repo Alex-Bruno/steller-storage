@@ -34,19 +34,19 @@ export function convertFloatToMoney(value: number) {
 
   let money = array[0]
   let cents = array[1]
-  if(!cents) {
+  if (!cents) {
     cents = '00'
   }
 
-  if(!money) {
+  if (!money) {
     money = '00'
   }
 
-  if(cents.length == 1) {
+  if (cents.length == 1) {
     cents = `${cents}0`
   }
-  
-  if(money.length == 1) {
+
+  if (money.length == 1) {
     money = `${money}0`
   }
 
@@ -62,6 +62,10 @@ export function convertStringToFloat(value: string) {
 
 export function getColorScheme() {
   return Appearance.getColorScheme()
+}
+
+export function getColor(color: string) {
+  return (Appearance.getColorScheme() === 'dark') ? '#DDD' : color
 }
 
 export function getLogo() {

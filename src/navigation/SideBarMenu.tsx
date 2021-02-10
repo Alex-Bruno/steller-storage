@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  SafeAreaView,
   StyleSheet,
   Image
 } from 'react-native'
@@ -10,30 +9,19 @@ import {
 } from '@react-navigation/drawer'
 
 import { getLogo } from '../services/functions'
+import { Container, Logo } from '../assets/styles/sideBarStyle'
 
 const CustomSidebarMenu = (props) => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Image
+    <Container>
+      <Logo
         source={getLogo()}
-        style={styles.sideMenuProfileIcon}
       />
       <DrawerContentScrollView {...props}>
-        <DrawerItemList {...props} />
+        <DrawerItemList style={{ color: '#FFF' }} {...props} />
       </DrawerContentScrollView>
-    </SafeAreaView>
+    </Container>
   )
 }
-
-const styles = StyleSheet.create({
-  sideMenuProfileIcon: {
-    resizeMode: 'center',
-    width: 100,
-    height: 100,
-    borderRadius: 100 / 2,
-    alignSelf: 'center',
-    marginTop: 50
-  }
-})
 
 export default CustomSidebarMenu

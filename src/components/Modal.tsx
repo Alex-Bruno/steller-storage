@@ -1,9 +1,9 @@
 import React from 'react'
-import { Alert, Modal, View, StyleSheet } from 'react-native'
+import { Modal } from 'react-native'
 
-import { ModalView, ModalHeader, ModalContent, Image, Title, Text, TextLarge, TextMedium } from '../assets/styles/modalStyle'
+import { ModalView, ModalHeader, ModalContent, Image, Title, Text, TextLarge } from '../assets/styles/modalStyle'
 import { convertFloatToMoney, getLogo } from '../services/functions'
-import { CloseButton, EditButton } from './Buttons'
+import { CloseLargeButton, EditLargeButton } from './Buttons'
 
 export const ModalProduct = ({ item, isVisible, setModalVisible, navigation }) => {
   const value = convertFloatToMoney(item.price)
@@ -18,17 +18,17 @@ export const ModalProduct = ({ item, isVisible, setModalVisible, navigation }) =
       <ModalView>
         <ModalHeader>
           <Title>{item.name}</Title>
-          <CloseButton onPress={() => setModalVisible(false)} />
         </ModalHeader>
         <ModalContent>
           <Image source={(item.image && item.type) ? { uri: item.image } : getLogo()} />
           <TextLarge>R$ {value}</TextLarge>
           <Text>{item.description}</Text>
-          <EditButton onPress={() => {
+          <EditLargeButton onPress={() => {
             setModalVisible(false)
             navigation.navigate('new', { id: item.id, title: `Editar Produto ${item.name}` })
           }}
           />
+          <CloseLargeButton onPress={() => setModalVisible(false)} />
         </ModalContent>
       </ModalView>
     </Modal>

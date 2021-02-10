@@ -16,10 +16,9 @@ const RenderProduct = ({ item, navigation }) => {
     <Card
       elevation={3}
       height={100}
-      width={Dimensions.get('window').width - 10}
-      enableShadow
+      width={Dimensions.get('window').width - 20}
       row
-      style={{ marginBottom: 8 }}
+      style={{ flex: 1, margin: 5, padding: 10, backgroundColor: '#DDD' }}
     >
       <ContainerImage onPress={() => {
         setModalVisible(true)
@@ -28,10 +27,10 @@ const RenderProduct = ({ item, navigation }) => {
         <Image source={(item.image && item.type) ? { uri: item.image } : getLogo()} />
       </ContainerImage>
       <ContainerItem>
-        <Text center text80 uppercase style={{ marginTop: 15 }}>
+        <Text center text72 uppercase style={{ marginTop: 15 }}>
           {item.name}
         </Text>
-        <Text center text60 dark60>
+        <Text center text60 dark30>
           R$ {value}
         </Text>
       </ContainerItem>

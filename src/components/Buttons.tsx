@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonGreen, ButtonRed, ButtonRedFixed, ButtonOrange, ButtonBlue, ButtonLargeGreen, ButtonLargeBlue, TextButton } from '../assets/styles/buttonStyle'
+import { ButtonGreen, ButtonRed, ButtonRedFixed, ButtonOrange, ButtonBlue, ButtonLargeGreen, ButtonLargeBlue, ButtonLargeRed, TextButton } from '../assets/styles/buttonStyle'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 export function EnterButton ({ onPress }) {
@@ -18,6 +18,14 @@ export function EditButton ({ onPress }) {
   )
 }
 
+export function EditLargeButton ({ onPress }) {
+  return (
+    <ButtonLargeGreen onPress={() => onPress()}>
+      <FontAwesome5 name='pen' size={20} color='white' />
+    </ButtonLargeGreen>
+  )
+}
+
 export function BackButton ({ onPress }) {
   return (
     <ButtonRed onPress={() => onPress()}>
@@ -31,6 +39,14 @@ export function CloseButton ({ onPress }) {
     <ButtonRedFixed onPress={() => onPress()}>
       <FontAwesome5 name='times' size={20} color='white' />
     </ButtonRedFixed>
+  )
+}
+
+export function CloseLargeButton ({ onPress }) {
+  return (
+    <ButtonLargeRed onPress={() => onPress()}>
+      <FontAwesome5 name='times' size={20} color='white' />
+    </ButtonLargeRed>
   )
 }
 

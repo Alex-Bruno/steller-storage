@@ -10,13 +10,12 @@ const PaymentType = ({ item, navigation }) => {
     <Card
       elevation={3}
       height={100}
-      width={Dimensions.get('window').width - 10}
-      enableShadow
+      width={Dimensions.get('window').width - 20}
       row
-      style={{ marginBottom: 8 }}
+      style={{ flex: 1, margin: 5, padding: 10, backgroundColor: '#DDD' }}
     >
       <ContainerItem>
-        <Text center text80 uppercase style={{ marginTop: 40, marginLeft: 10 }}>
+        <Text center text72 uppercase style={{ marginTop: 20, marginLeft: 10 }}>
           {item.name}
         </Text>
       </ContainerItem>
