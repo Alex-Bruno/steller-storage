@@ -5,11 +5,10 @@ export const Container = styled.SafeAreaView`
   align-items: center;
   justify-content: center;
   background-color: #FFF;
-  padding: 20px;
 `
 export const ScrollView = styled.ScrollView`
   flex: 1;
-  margin-bottom: 120px ;
+  margin-bottom: 50px ;
 `
 export const List = styled.FlatList`
   flex: 1;
